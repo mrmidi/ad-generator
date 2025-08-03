@@ -216,18 +216,21 @@ The project includes comprehensive GitHub Actions workflows:
 ### Deployment Options
 
 #### 🌐 **Production Deployment** (Recommended)
+
 - **Live Site**: https://ad-generator.mrmidi.net
 - **Auto-deployment**: Pushes to `main` branch trigger deployment
 - **VPS Setup**: Debian 12 + Nginx + Let's Encrypt SSL
 - **Performance**: Static files served via Nginx with caching
 
 #### ☁️ **Alternative Deployments**
+
 - **Vercel**: Automatic deployment on push (configure secrets)
 - **GitHub Pages**: Static export on version tags
 
 ### 🔧 VPS Deployment Setup
 
 1. **Run VPS setup** (one-time):
+
    ```bash
    sudo bash setup-vps.sh
    ```
