@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-  IoArrowUp, 
-  IoArrowDown, 
-  IoArrowBack, 
-  IoArrowForward 
+import {
+  IoArrowUp,
+  IoArrowDown,
+  IoArrowBack,
+  IoArrowForward,
 } from 'react-icons/io5';
 import type { AppState } from '@/app/state';
 
@@ -49,8 +49,8 @@ export default function ArrowToolbar({ state, setState }: ArrowToolbarProps) {
   ];
 
   return (
-    <div 
-      role="toolbar" 
+    <div
+      role="toolbar"
       aria-label="Arrow symbols toolbar"
       className="flex gap-2 p-2 bg-gray-50 rounded-lg border"
     >

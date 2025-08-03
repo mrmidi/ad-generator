@@ -94,7 +94,7 @@ describe('Editor', () => {
 
       const container = screen.getByRole('textbox').closest('.paper-container');
       expect(container).toBeInTheDocument();
-      
+
       const paperElement = screen.getByRole('textbox').closest('.paper-base');
       expect(paperElement).toBeInTheDocument();
       expect(paperElement).toHaveClass('a4-portrait'); // default format
@@ -102,14 +102,17 @@ describe('Editor', () => {
 
     it('displays paper format indicator', () => {
       render(<Editor state={initialState} setState={mockSetState} />);
-      
+
       expect(screen.getByText('📄 A4 Портрет')).toBeInTheDocument();
     });
 
     it('displays landscape format indicator when paperFormat is a4-landscape', () => {
-      const landscapeState = { ...initialState, paperFormat: 'a4-landscape' as const };
+      const landscapeState = {
+        ...initialState,
+        paperFormat: 'a4-landscape' as const,
+      };
       render(<Editor state={landscapeState} setState={mockSetState} />);
-      
+
       expect(screen.getByText('📄 A4 Ландшафт')).toBeInTheDocument();
     });
   });
@@ -136,13 +139,18 @@ describe('Editor', () => {
     });
 
     it('reflects external state changes in editor content', async () => {
-      const { rerender } = render(<Editor state={initialState} setState={mockSetState} />);
-      
+      const { rerender } = render(
+        <Editor state={initialState} setState={mockSetState} />
+      );
+
       const editor = screen.getByRole('textbox');
-      const updatedState = { ...initialState, editorContent: 'Updated content' };
-      
+      const updatedState = {
+        ...initialState,
+        editorContent: 'Updated content',
+      };
+
       rerender(<Editor state={updatedState} setState={mockSetState} />);
-      
+
       await waitFor(() => {
         expect(editor.textContent).toBe('Updated content');
       });
@@ -175,7 +183,7 @@ describe('Editor', () => {
 
       const editor = screen.getByRole('textbox');
       const preventDefault = jest.fn();
-      
+
       Object.defineProperty(editor, 'innerText', {
         get: () => 'Pasted content',
         set: () => {},
@@ -203,7 +211,7 @@ describe('Editor', () => {
       render(<Editor state={initialState} setState={mockSetState} />);
 
       const editor = screen.getByRole('textbox');
-      
+
       Object.defineProperty(editor, 'innerText', {
         get: () => 'Test paste',
         set: () => {},
@@ -218,14 +226,18 @@ describe('Editor', () => {
         currentTarget: editor,
       });
 
-      expect(document.execCommand).toHaveBeenCalledWith('insertText', false, 'Test paste');
+      expect(document.execCommand).toHaveBeenCalledWith(
+        'insertText',
+        false,
+        'Test paste'
+      );
     });
 
     it('handles paste with null clipboard data', () => {
       render(<Editor state={initialState} setState={mockSetState} />);
 
       const editor = screen.getByRole('textbox');
-      
+
       Object.defineProperty(editor, 'innerText', {
         get: () => '',
         set: () => {},
@@ -238,14 +250,18 @@ describe('Editor', () => {
         currentTarget: editor,
       });
 
-      expect(document.execCommand).toHaveBeenCalledWith('insertText', false, '');
+      expect(document.execCommand).toHaveBeenCalledWith(
+        'insertText',
+        false,
+        ''
+      );
     });
   });
 
   describe('ResizeObserver Integration', () => {
     it('sets up ResizeObserver on mount', () => {
       render(<Editor state={initialState} setState={mockSetState} />);
-      
+
       expect(global.ResizeObserver).toHaveBeenCalled();
     });
 
@@ -256,13 +272,17 @@ describe('Editor', () => {
         unobserve: jest.fn(),
         disconnect: mockDisconnect,
       };
-      
-      (global.ResizeObserver as jest.Mock).mockImplementation(() => mockObserver);
-      
-      const { unmount } = render(<Editor state={initialState} setState={mockSetState} />);
-      
+
+      (global.ResizeObserver as jest.Mock).mockImplementation(
+        () => mockObserver
+      );
+
+      const { unmount } = render(
+        <Editor state={initialState} setState={mockSetState} />
+      );
+
       unmount();
-      
+
       expect(mockDisconnect).toHaveBeenCalled();
     });
   });
@@ -278,10 +298,10 @@ describe('Editor', () => {
         selectNodeContents: jest.fn(),
         collapse: jest.fn(),
       };
-      
+
       (document.getSelection as jest.Mock).mockReturnValue(mockSelection);
       (document.createRange as jest.Mock).mockReturnValue(mockRange);
-      
+
       render(<Editor state={initialState} setState={mockSetState} />);
 
       // The component exists and doesn't crash
@@ -306,7 +326,7 @@ describe('Editor', () => {
       const editor = screen.getByRole('textbox');
       const container = editor.closest('.paper-container');
       const paperDiv = editor.closest('.paper-base');
-      
+
       expect(container).toBeInTheDocument();
       expect(paperDiv).toBeInTheDocument();
       expect(paperDiv).toHaveClass('paper-base', 'a4-portrait');
@@ -315,22 +335,29 @@ describe('Editor', () => {
 
   describe('State Updates', () => {
     it('updates when paperFormat changes', () => {
-      const { rerender } = render(<Editor state={initialState} setState={mockSetState} />);
-      
+      const { rerender } = render(
+        <Editor state={initialState} setState={mockSetState} />
+      );
+
       // Change paper format
-      const updatedState = { ...initialState, paperFormat: 'a4-landscape' as const };
+      const updatedState = {
+        ...initialState,
+        paperFormat: 'a4-landscape' as const,
+      };
       rerender(<Editor state={updatedState} setState={mockSetState} />);
-      
+
       const paperDiv = screen.getByRole('textbox').closest('.paper-base');
       expect(paperDiv).toHaveClass('a4-landscape');
     });
 
     it('updates editor content when state changes', () => {
-      const { rerender } = render(<Editor state={initialState} setState={mockSetState} />);
-      
+      const { rerender } = render(
+        <Editor state={initialState} setState={mockSetState} />
+      );
+
       const updatedState = { ...initialState, editorContent: 'New content' };
       rerender(<Editor state={updatedState} setState={mockSetState} />);
-      
+
       // Component rerenders without crashing
       expect(screen.getByRole('textbox')).toBeInTheDocument();
     });
@@ -339,20 +366,21 @@ describe('Editor', () => {
   describe('Layout Edge Cases', () => {
     it('handles edge cases in layout calculations gracefully', () => {
       render(<Editor state={initialState} setState={mockSetState} />);
-      
+
       const editor = screen.getByRole('textbox');
-      
+
       // Mock sanitizeText to return the content we expect
-      const mockSanitizeText = jest.requireMock('../../utils/layout').sanitizeText;
+      const mockSanitizeText =
+        jest.requireMock('../../utils/layout').sanitizeText;
       mockSanitizeText.mockReturnValueOnce('Test content for edge cases');
-      
+
       // Just trigger layout by simulating input - component should handle edge cases gracefully
       fireEvent.input(editor, {
         currentTarget: {
           innerText: 'Test content for edge cases',
         },
       });
-      
+
       // Component should handle any edge cases without crashing
       expect(screen.getByRole('textbox')).toBeInTheDocument();
       expect(mockSetState).toHaveBeenCalledWith({
@@ -363,9 +391,9 @@ describe('Editor', () => {
 
     it('applies proper font and padding styles during layout', () => {
       render(<Editor state={initialState} setState={mockSetState} />);
-      
+
       const editor = screen.getByRole('textbox');
-      
+
       // Trigger layout by changing content
       fireEvent.input(editor, {
         currentTarget: {
@@ -373,7 +401,7 @@ describe('Editor', () => {
           innerText: 'Test content',
         },
       });
-      
+
       // The layout function should have run (component doesn't crash)
       expect(editor).toBeInTheDocument();
     });
@@ -395,18 +423,18 @@ describe('Editor', () => {
         writable: true,
       });
 
-      const debugState = { 
-        ...initialState, 
+      const debugState = {
+        ...initialState,
         debugMode: true,
         fontSize: 18,
         verticalPosition: 60,
       };
-      
+
       render(<Editor state={debugState} setState={mockSetState} />);
 
       // Trigger layout to generate debug info by simulating input
       const editor = screen.getByRole('textbox');
-      
+
       // Add some content to trigger the layout function
       Object.defineProperty(editor, 'innerText', {
         get: () => 'Debug test content',
@@ -418,9 +446,12 @@ describe('Editor', () => {
       });
 
       // Use waitFor to allow layout effects to complete
-      await waitFor(() => {
-        expect(debugElement.textContent).toContain('TEXT');
-      }, { timeout: 1000 });
+      await waitFor(
+        () => {
+          expect(debugElement.textContent).toContain('TEXT');
+        },
+        { timeout: 1000 }
+      );
 
       // Verify comprehensive debug information is present
       expect(debugElement.textContent).toContain('Content Length:');
@@ -428,7 +459,7 @@ describe('Editor', () => {
       expect(debugElement.textContent).toContain('Base Font Size: 18px');
       expect(debugElement.textContent).toContain('Scaled Font Size:');
       expect(debugElement.textContent).toContain('Line Height:');
-      
+
       expect(debugElement.textContent).toContain('POSITION');
       expect(debugElement.textContent).toContain('Vertical Position: 60%');
       expect(debugElement.textContent).toContain('Padding Top:');
@@ -436,14 +467,16 @@ describe('Editor', () => {
       expect(debugElement.textContent).toContain('Usable Height:');
       expect(debugElement.textContent).toContain('Text Center Y:');
       expect(debugElement.textContent).toContain('Text Fits:');
-      
+
       expect(debugElement.textContent).toContain('PAPER');
       expect(debugElement.textContent).toContain('Size:');
       expect(debugElement.textContent).toContain('Scale:');
-      
+
       expect(debugElement.textContent).toContain('DIRECTION');
       expect(debugElement.textContent).toContain('Text Direction: ltr');
-      expect(debugElement.textContent).toContain('Unicode Bidi: isolate-override');
+      expect(debugElement.textContent).toContain(
+        'Unicode Bidi: isolate-override'
+      );
       expect(debugElement.textContent).toContain('Computed Direction: ltr');
 
       // Cleanup
@@ -453,7 +486,7 @@ describe('Editor', () => {
     it('handles missing debug element gracefully', () => {
       // Don't create debug element
       const debugState = { ...initialState, debugMode: true };
-      
+
       render(<Editor state={debugState} setState={mockSetState} />);
 
       const editor = screen.getByRole('textbox');
@@ -474,9 +507,10 @@ describe('Editor', () => {
       render(<Editor state={initialState} setState={mockSetState} />);
 
       const editor = screen.getByRole('textbox');
-      
+
       // Mock sanitizeText to return different content to trigger normalization path
-      const mockSanitizeText = jest.requireMock('../../utils/layout').sanitizeText;
+      const mockSanitizeText =
+        jest.requireMock('../../utils/layout').sanitizeText;
       mockSanitizeText.mockReturnValueOnce('Normalized content');
 
       fireEvent.input(editor, {
@@ -496,9 +530,10 @@ describe('Editor', () => {
       render(<Editor state={initialState} setState={mockSetState} />);
 
       const editor = screen.getByRole('textbox');
-      
+
       // Mock sanitizeText to return same content (no normalization)
-      const mockSanitizeText = jest.requireMock('../../utils/layout').sanitizeText;
+      const mockSanitizeText =
+        jest.requireMock('../../utils/layout').sanitizeText;
       mockSanitizeText.mockReturnValueOnce('Clean content');
 
       fireEvent.input(editor, {
@@ -524,18 +559,19 @@ describe('Editor', () => {
         selectNodeContents: jest.fn(),
         collapse: jest.fn(),
       };
-      
+
       (document.getSelection as jest.Mock).mockReturnValue(mockSelection);
       (document.createRange as jest.Mock).mockReturnValue(mockRange);
-      
+
       render(<Editor state={initialState} setState={mockSetState} />);
 
       const editor = screen.getByRole('textbox');
-      
+
       // Mock sanitizeText to return the same content as input
-      const mockSanitizeText = jest.requireMock('../../utils/layout').sanitizeText;
+      const mockSanitizeText =
+        jest.requireMock('../../utils/layout').sanitizeText;
       mockSanitizeText.mockReturnValueOnce('Test content');
-      
+
       // Just trigger an input event - the component should handle selection safely
       fireEvent.input(editor, {
         currentTarget: {
