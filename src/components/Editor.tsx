@@ -25,7 +25,10 @@ export default function Editor({ state, setState }: EditorProps) {
   const applyPaperSize = useCallback(() => {
     if (!containerRef.current || !paperRef.current) return null;
     const containerRect = containerRef.current.getBoundingClientRect();
-    const avail = { width: containerRect.width - 40, height: containerRect.height - 40 };
+    const avail = {
+      width: containerRect.width - 40,
+      height: containerRect.height - 40,
+    };
     const paper = calculateOptimalPaperSize(avail, state.paperFormat, 0.95);
 
     const paperEl = paperRef.current;
@@ -43,33 +46,49 @@ export default function Editor({ state, setState }: EditorProps) {
     if (!editorRef.current || !paperRef.current) return;
 
     // Always run after paper size is set
-    const paper = applyPaperSize() || { width: paperRef.current.clientWidth, height: paperRef.current.clientHeight, scale: 1 };
+    const paper = applyPaperSize() || {
+      width: paperRef.current.clientWidth,
+      height: paperRef.current.clientHeight,
+      scale: 1,
+    };
     const editor = editorRef.current;
     const paperHeight = getUnscaledHeight(paperRef.current);
 
-    const { fontSizePx, lineHeightPx } = calculateScaledFont(state.fontSize, paper.scale);
+    const { fontSizePx, lineHeightPx } = calculateScaledFont(
+      state.fontSize,
+      paper.scale
+    );
     editor.style.fontSize = `${fontSizePx}px`;
     editor.style.lineHeight = `${lineHeightPx}px`;
 
     // Measure text height using a probe with current width/typography
     const content = sanitizeText(editor.innerText);
-    const textHeight = measureTextHeightWithProbe(content, editor, fontSizePx, lineHeightPx);
+    const textHeight = measureTextHeightWithProbe(
+      content,
+      editor,
+      fontSizePx,
+      lineHeightPx
+    );
 
     // Edge-anchored, clamped vertical position
-    const vp = calculateVerticalTextPosition(paperHeight, state.verticalPosition, textHeight, 0.05);
-    
+    const vp = calculateVerticalTextPosition(
+      paperHeight,
+      state.verticalPosition,
+      textHeight,
+      0.05
+    );
+
     // Round padding values to prevent subpixel clipping in PDF
     const paddingTop = Math.ceil(vp.paddingTop);
     const paddingBottom = Math.ceil(vp.paddingBottom);
-    
+
     editor.style.paddingTop = `${paddingTop}px`;
     editor.style.paddingBottom = `${paddingBottom}px`;
 
     if (state.debugMode) {
       const dbg = document.getElementById('debugMessages');
       if (dbg) {
-        dbg.textContent =
-`TEXT
+        dbg.textContent = `TEXT
 Content Length: ${content.length} chars
 Text Height: ${textHeight.toFixed(1)}px
 Base Font Size: ${state.fontSize}px
@@ -131,12 +150,20 @@ Computed Direction: ${getComputedStyle(editor).direction}`;
   /** Update on changes that affect layout */
   useEffect(() => {
     scheduleLayout();
-  }, [state.fontSize, state.verticalPosition, state.paperFormat, scheduleLayout]);
+  }, [
+    state.fontSize,
+    state.verticalPosition,
+    state.paperFormat,
+    scheduleLayout,
+  ]);
 
   return (
     <div ref={containerRef} className="paper-container">
       <div className="relative">
-        <div ref={paperRef} className={`paper-base ${state.paperFormat} border-2 border-gray-300 hover:shadow-xl transition-shadow duration-300`}>
+        <div
+          ref={paperRef}
+          className={`paper-base ${state.paperFormat} border-2 border-gray-300 hover:shadow-xl transition-shadow duration-300`}
+        >
           <div
             id="editor"
             ref={editorRef}
@@ -144,8 +171,8 @@ Computed Direction: ${getComputedStyle(editor).direction}`;
             role="textbox"
             dir="ltr"
             data-placeholder="Все по 100 ₽"
-            onInput={(e) => {
-              const raw = e.currentTarget.innerText;      // keeps \n
+            onInput={e => {
+              const raw = e.currentTarget.innerText; // keeps \n
               const cleaned = sanitizeText(raw);
               if (cleaned !== raw) {
                 // normalize DOM without re-render churn
@@ -164,7 +191,7 @@ Computed Direction: ${getComputedStyle(editor).direction}`;
               setState({ ...state, editorContent: cleaned });
               scheduleLayout();
             }}
-            onPaste={(e) => {
+            onPaste={e => {
               e.preventDefault();
               const text = e.clipboardData?.getData('text/plain') || '';
               const cleaned = sanitizeText(text);
@@ -177,7 +204,9 @@ Computed Direction: ${getComputedStyle(editor).direction}`;
         </div>
         {/* Paper format indicator */}
         <div className="absolute -bottom-2 -right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full shadow-md">
-          {state.paperFormat === 'a4-portrait' ? '📄 A4 Portrait' : '📄 A4 Landscape'}
+          {state.paperFormat === 'a4-portrait'
+            ? '📄 A4 Portrait'
+            : '📄 A4 Landscape'}
         </div>
       </div>
     </div>

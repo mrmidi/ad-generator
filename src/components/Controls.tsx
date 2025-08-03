@@ -10,13 +10,16 @@ export default function Controls({ state, setState }: ControlsProps) {
   const handlePrint = async () => {
     await iframePrint({
       paperFormat: state.paperFormat,
-      editorContent: state.editorContent
+      editorContent: state.editorContent,
     });
   };
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-        <label className="text-sm font-medium text-yellow-800" htmlFor="debugModeToggle">
+        <label
+          className="text-sm font-medium text-yellow-800"
+          htmlFor="debugModeToggle"
+        >
           🔧 Debug Mode
         </label>
         <input
@@ -57,8 +60,14 @@ export default function Controls({ state, setState }: ControlsProps) {
         </div>
       </div>
       <div className="bg-gray-50 p-4 rounded-lg">
-        <label htmlFor="fontSize" className="block text-sm font-medium text-gray-700 mb-2">
-          📝 Размер шрифта: <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-xs font-mono">{state.fontSize}px</span>
+        <label
+          htmlFor="fontSize"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          📝 Размер шрифта:{' '}
+          <span className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-md text-xs font-mono">
+            {state.fontSize}px
+          </span>
         </label>
         <input
           type="range"
@@ -67,7 +76,7 @@ export default function Controls({ state, setState }: ControlsProps) {
           max="100"
           id="fontSize"
           value={state.fontSize}
-          onChange={(e) =>
+          onChange={e =>
             setState({ ...state, fontSize: parseInt(e.target.value) })
           }
         />
@@ -76,10 +85,16 @@ export default function Controls({ state, setState }: ControlsProps) {
           <span>100px</span>
         </div>
       </div>
-      
+
       <div className="bg-gray-50 p-4 rounded-lg">
-        <label htmlFor="verticalPosition" className="block text-sm font-medium text-gray-700 mb-2">
-          ↕️ Позиция по вертикали: <span className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded-md text-xs font-mono">{state.verticalPosition}%</span>
+        <label
+          htmlFor="verticalPosition"
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
+          ↕️ Позиция по вертикали:{' '}
+          <span className="inline-block bg-green-100 text-green-800 px-2 py-1 rounded-md text-xs font-mono">
+            {state.verticalPosition}%
+          </span>
         </label>
         <input
           type="range"
@@ -88,7 +103,7 @@ export default function Controls({ state, setState }: ControlsProps) {
           max="100"
           id="verticalPosition"
           value={state.verticalPosition}
-          onChange={(e) =>
+          onChange={e =>
             setState({ ...state, verticalPosition: parseInt(e.target.value) })
           }
         />
@@ -98,10 +113,10 @@ export default function Controls({ state, setState }: ControlsProps) {
           <span>Низ</span>
         </div>
       </div>
-      
+
       <div className="space-y-3">
-        <button 
-          id="printButton" 
+        <button
+          id="printButton"
           className="w-full bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 hover:shadow-xl"
           onClick={handlePrint}
         >

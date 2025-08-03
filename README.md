@@ -1,35 +1,38 @@
-# Ad Generator - Announcement PDF Creator
+# Ad Generator - Announcement Creator 🖨️
 
-A modern web application for creating and exporting text-based announcements as PDF files. Built with Next.js, React, TypeScript, and Tailwind CSS using Test-Driven Development (TDD).
+A modern web application for creating and printing text-based announcements with WYSIWYG accuracy. Built with Next.js, React, TypeScript, and Tailwind CSS using Test-Driven Development (TDD).
 
-## Features
+## ✨ Features
 
-- **Rich Text Editing**: Content-editable interface with LTR enforcement and newline support
-- **Paper Format Selection**: A4 Portrait and Landscape orientations
-- **Dynamic Font Scaling**: Responsive font sizing based on paper dimensions
-- **Vertical Text Positioning**: Edge-anchored positioning with overflow protection
-- **PDF Export**: High-quality PDF generation using html2canvas and jsPDF
-- **Debug Mode**: Comprehensive layout and positioning diagnostics
-- **Responsive Design**: Optimized for desktop and mobile devices
+- **📝 Rich Text Editing**: Content-editable interface with LTR enforcement and newline support
+- **📄 Paper Format Selection**: A4 Portrait and Landscape orientations
+- **🔍 Dynamic Font Scaling**: Responsive font sizing based on paper dimensions
+- **↕️ Vertical Text Positioning**: Edge-anchored positioning with overflow protection
+- **🖨️ WYSIWYG Printing**: High-accuracy iframe-based printing with proper A4 dimensions
+- **🔧 Debug Mode**: Comprehensive layout and positioning diagnostics
+- **📱 Responsive Design**: Optimized for desktop and mobile devices
+- **🌐 Russian Localization**: Full Russian UI with Cyrillic font support
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm, yarn, pnpm, or bun
+- Node.js 20+
+- npm (or yarn/pnpm/bun)
 
 ### Installation
 
-1. Clone the repository
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd ad-generator
+```
+
 2. Install dependencies:
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
 ```
 
 ### Development
@@ -38,12 +41,6 @@ Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
@@ -55,50 +52,50 @@ npm run build
 npm start
 ```
 
-## Testing
+## 🧪 Testing
 
 The project uses comprehensive Test-Driven Development (TDD) with both unit and end-to-end tests.
 
 ### Unit Tests (Jest)
 
 ```bash
-npm test
+npm test                 # Run all tests
+npm run test:watch       # Watch mode
+npm run test:coverage    # With coverage report
 ```
 
 Tests include:
+
 - Component functionality (Controls, Editor, Debug, Header)
-- Utility functions (layout calculations, text positioning)
+- Utility functions (layout calculations, iframe printing)
 - State management
 
 ### End-to-End Tests (Playwright)
 
 ```bash
-npm run test:e2e
+npm run test:e2e         # Headless mode
+npm run test:e2e:ui      # Interactive UI mode
+npm run test:e2e:headed  # Headed browser mode
 ```
 
 E2E tests verify:
-- Text direction enforcement (LTR)
-- Multi-line text handling
-- Vertical positioning accuracy
-- Paper dimension stability
-- Font scaling across orientations
-- PDF export functionality
 
-### Test UI (Development)
+- Iframe print functionality and WYSIWYG accuracy
+- Paper dimension calculations (A4 portrait/landscape)
+- Text positioning and font scaling
+- Print metrics conversion (px to mm)
+- Content preservation during print operations
 
-```bash
-npm run test:e2e:ui
-```
-
-## Architecture
+## 🏗️ Architecture
 
 ### Tech Stack
 
-- **Frontend**: Next.js 15, React 19, TypeScript
+- **Frontend**: Next.js 15, React 19, TypeScript 5
 - **Styling**: Tailwind CSS 4
-- **PDF Generation**: jsPDF + html2canvas
+- **Printing**: Custom iframe-based solution with mm conversion
 - **Testing**: Jest (unit), Playwright (E2E)
-- **Linting**: ESLint with Next.js config
+- **Linting**: ESLint + Prettier
+- **CI/CD**: GitHub Actions
 
 ### Project Structure
 
@@ -106,75 +103,121 @@ npm run test:e2e:ui
 src/
 ├── app/
 │   ├── globals.css          # Global styles and CSS variables
-│   ├── layout.tsx           # Root layout component
+│   ├── layout.tsx           # Root layout with fonts
 │   ├── page.tsx             # Main application page
 │   └── state.ts             # Application state interface
 ├── components/
 │   ├── Controls.tsx         # Left sidebar controls
 │   ├── Debug.tsx            # Debug information panel
 │   ├── Editor.tsx           # Main text editor component
-│   └── Header.tsx           # Application header
+│   ├── Header.tsx           # Application header
+│   └── GlobalExports.tsx    # Global function exports for testing
 └── utils/
     ├── layout.ts            # Core layout and positioning utilities
-    └── pdfExport.ts         # PDF generation functionality
+    └── iframePrint.ts       # Iframe-based printing functionality
 ```
 
-### Key Design Principles
+## 🖨️ Print Technology
+
+### Iframe Print Solution
+
+- **CSP-Friendly**: No inline scripts, compliant with Content Security Policy
+- **WYSIWYG Accuracy**: Pixel-perfect print output matching screen appearance
+- **Proper A4 Dimensions**: 210×297mm (portrait) and 297×210mm (landscape)
+- **mm-Based Font Conversion**: Accurate px→mm conversion using browser metrics
+- **Content Preservation**: Maintains all styling and positioning during print
+
+### Key Technical Features
+
+1. **Hidden Iframe Approach**: Creates isolated print context without popup blockers
+2. **@page CSS Rules**: Proper paper size control via CSS
+3. **Font Metrics Calculation**: Runtime px→mm conversion for WYSIWYG accuracy
+4. **Cleanup Management**: Automatic iframe removal after print completion
+
+## 🎯 Key Design Principles
 
 1. **DOM as Source of Truth**: No `dangerouslySetInnerHTML`, DOM drives content state
 2. **Strict LTR Enforcement**: `unicode-bidi: isolate-override` prevents RTL issues
 3. **Edge-Anchored Positioning**: 0% = top edge, 100% = bottom edge with clamping
 4. **Deterministic Updates**: ResizeObserver + requestAnimationFrame (no setTimeout)
 5. **Accurate Measurement**: Hidden DOM probes for precise text height calculation
+6. **Print-First Design**: All measurements in mm for consistent print output
 
-## Features in Detail
+## 📋 Available Scripts
 
-### Text Direction
-- Enforces left-to-right (LTR) text direction regardless of input content
-- Strips bidirectional control characters on input/paste
-- Preserves visual order for mixed scripts (English, Cyrillic, digits, currency)
+```bash
+npm run dev              # Development server
+npm run build            # Production build
+npm start                # Start production server
+npm run lint             # Run ESLint
+npm run lint:fix         # Fix ESLint issues
+npm run format           # Format code with Prettier
+npm run format:check     # Check code formatting
+npm test                 # Run unit tests
+npm run test:watch       # Run tests in watch mode
+npm run test:coverage    # Run tests with coverage
+npm run test:e2e         # Run E2E tests
+npm run test:e2e:ui      # Run E2E tests with UI
+npm run export           # Build for static export
+npm run type-check       # TypeScript type checking
+```
 
-### Vertical Positioning
-- Edge-anchored slider: 0% aligns text top with usable area top, 100% aligns text bottom with usable area bottom
-- Automatic clamping prevents text overflow
-- Dynamic padding calculation based on measured text height
-
-### Font Scaling
-- Proportional scaling based on paper dimensions
-- Maintains readability with minimum/maximum font size limits
-- Consistent scaling across orientation changes
-
-### PDF Export
-- Pixel-perfect PDF generation matching screen appearance
-- Proper A4 dimensions (210×297mm portrait, 297×210mm landscape)
-- High-quality rendering with 2x scale factor
-
-## Development Notes
+## 🔧 Development
 
 ### Code Style
+
 - TypeScript strict mode enabled
-- ESLint with Next.js core web vitals rules
-- Functional components with hooks
+- ESLint with Next.js configuration
+- Prettier for code formatting
 - Comprehensive type definitions
 
 ### Performance
+
 - ResizeObserver for efficient layout updates
 - requestAnimationFrame for smooth animations
 - Debounced text height measurements
 - Minimal re-renders through careful dependency management
 
-## Contributing
+### Testing Strategy
+
+- **Unit Tests**: Component logic and utilities
+- **Integration Tests**: Component interactions
+- **E2E Tests**: Full print workflow validation
+- **Visual Tests**: WYSIWYG print accuracy
+
+## 🚀 CI/CD Pipeline
+
+The project includes comprehensive GitHub Actions workflows:
+
+- **Linting & Formatting**: ESLint and Prettier checks
+- **Unit Testing**: Jest with coverage reporting
+- **E2E Testing**: Playwright browser automation
+- **Security Auditing**: Dependency vulnerability scanning
+- **Build Verification**: Production build validation
+- **Automated Deployment**: Vercel and GitHub Pages support
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Write tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
+4. Ensure all tests pass (`npm test && npm run test:e2e`)
+5. Run linting (`npm run lint && npm run format:check`)
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
 
-## License
+## 📜 License
 
 This project is private and proprietary.
 
-## Migration Notes
+## 🔄 Migration Notes
 
-This application was refactored from a vanilla JavaScript implementation (see `/backup/` folder) to a modern React/Next.js stack while maintaining all original functionality and improving performance, maintainability, and user experience.
+This application evolved through multiple iterations:
+
+1. **Vanilla JS** (see `/backup/` folder) - Original implementation
+2. **React/Next.js** - Modern framework migration
+3. **Print CSS** - Initial print functionality
+4. **Iframe Solution** - Current WYSIWYG print implementation
+
+Each iteration maintained functionality while improving performance, maintainability, and print accuracy.

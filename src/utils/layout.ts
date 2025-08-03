@@ -49,7 +49,7 @@ export function calculateOptimalPaperSize(
   return {
     width: paper.width * scale,
     height: paper.height * scale,
-    scale
+    scale,
   };
 }
 
@@ -96,7 +96,7 @@ export function calculateVerticalTextPosition(
     paddingTop,
     paddingBottom,
     usableHeight: usable,
-    textCenterY
+    textCenterY,
   };
 }
 

@@ -10,8 +10,8 @@ export interface AppState {
 
 export const initialState: AppState = {
   debugMode: false,
-  paperFormat: "a4-portrait",
+  paperFormat: 'a4-portrait',
   fontSize: 50,
   verticalPosition: 50,
-  editorContent: "",
+  editorContent: '',
 };

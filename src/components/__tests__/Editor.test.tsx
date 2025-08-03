@@ -20,13 +20,13 @@ describe('Editor', () => {
     Object.defineProperty(editor, 'innerText', {
       get: () => 'Hello, world!',
       set: () => {},
-      configurable: true
+      configurable: true,
     });
-    
-    fireEvent.input(editor, { 
+
+    fireEvent.input(editor, {
       currentTarget: editor,
     });
-    
+
     expect(mockSetState).toHaveBeenCalledWith({
       ...initialState,
       editorContent: 'Hello, world!',

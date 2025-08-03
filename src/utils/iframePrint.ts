@@ -6,17 +6,17 @@ export interface IframePrintOptions {
   editorContent: string;
   /** Set true only if content is trusted HTML; otherwise plain text is used. */
   treatContentAsHTML?: boolean;
-  fontFamily?: string;   // default bold Roboto like your editor
-  fontWeight?: number;   // default 700
+  fontFamily?: string; // default bold Roboto like your editor
+  fontWeight?: number; // default 700
 }
 
 /* Physical A4 size in mm by orientation */
 const pageMmHeight = (fmt: PaperFormat) => (fmt === 'a4-landscape' ? 210 : 297);
-const pageMmWidth  = (fmt: PaperFormat) => (fmt === 'a4-landscape' ? 297 : 210);
+const pageMmWidth = (fmt: PaperFormat) => (fmt === 'a4-landscape' ? 297 : 210);
 
 /** Compute px→mm using the live paper content height (clientHeight, borderless). */
 function computeMmMetrics(format: PaperFormat) {
-  const paperEl  = document.querySelector('.paper-base') as HTMLElement | null;
+  const paperEl = document.querySelector('.paper-base') as HTMLElement | null;
   const editorEl = document.querySelector('#editor') as HTMLElement | null;
   if (!paperEl || !editorEl) return null;
 
@@ -29,20 +29,23 @@ function computeMmMetrics(format: PaperFormat) {
   let linePx = parseFloat(cs.lineHeight);
   if (!linePx || Number.isNaN(linePx)) linePx = Math.round(fontPx * 1.4);
 
-  const padTopPx    = parseFloat(cs.paddingTop)    || 0;
+  const padTopPx = parseFloat(cs.paddingTop) || 0;
   const padBottomPx = parseFloat(cs.paddingBottom) || 0;
 
   return {
-    fontMM:     fontPx     * mmPerPx,
-    lineMM:     linePx     * mmPerPx,
-    padTopMM:   padTopPx   * mmPerPx,
-    padBottomMM:padBottomPx* mmPerPx,
+    fontMM: fontPx * mmPerPx,
+    lineMM: linePx * mmPerPx,
+    padTopMM: padTopPx * mmPerPx,
+    padBottomMM: padBottomPx * mmPerPx,
   };
 }
 
 /** Escape text for safe HTML injection (used when treatContentAsHTML=false) */
 function escapeHtml(text: string) {
-  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 /**
@@ -54,8 +57,8 @@ export async function iframePrint(options: IframePrintOptions): Promise<void> {
     paperFormat,
     editorContent,
     treatContentAsHTML = false,
-    fontFamily        = `'Roboto', Arial, sans-serif`,
-    fontWeight        = 700,
+    fontFamily = `'Roboto', Arial, sans-serif`,
+    fontWeight = 700,
   } = options;
 
   if (!editorContent || editorContent.trim() === '') {
@@ -143,8 +146,9 @@ html, body { margin: 0; padding: 0; height: 100%; background: #fff; color: #000;
   doc.close();
 
   // Wait for iframe DOM to be ready
-  await new Promise<void>((resolve) => {
-    if (iframe.contentWindow?.document.readyState === 'complete') return resolve();
+  await new Promise<void>(resolve => {
+    if (iframe.contentWindow?.document.readyState === 'complete')
+      return resolve();
     iframe.addEventListener('load', () => resolve(), { once: true });
   });
 
@@ -162,8 +166,13 @@ html, body { margin: 0; padding: 0; height: 100%; background: #fff; color: #000;
   else iEditor.innerHTML = escapeHtml(editorContent);
 
   // Wait for fonts/layout in the iframe, then print
-  try { await (iDoc as Document & { fonts?: { ready?: Promise<void> } }).fonts?.ready; } catch {}
-  await new Promise<void>((r) => iWin.requestAnimationFrame(() => iWin.requestAnimationFrame(() => r())));
+  try {
+    await (iDoc as Document & { fonts?: { ready?: Promise<void> } }).fonts
+      ?.ready;
+  } catch {}
+  await new Promise<void>(r =>
+    iWin.requestAnimationFrame(() => iWin.requestAnimationFrame(() => r()))
+  );
 
   // Clean up after print finishes (listen on the iframe window)
   const cleanup = () => {

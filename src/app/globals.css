@@ -1,13 +1,14 @@
 /* globals.css - Core styling including WYSIWYG print isolation and physical A4 sizing */
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* ---------- Variables & Theme ---------- */
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --font-sans: ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  --font-mono:
+    ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas, monospace;
   --font-roboto: 'Roboto', Arial, sans-serif;
 }
 
@@ -41,7 +42,7 @@ body {
   color: #000;
   position: relative;
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0,0,0,.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   overflow: hidden; /* normal on-screen; overridden in print isolation */
   display: flex;
   flex-direction: column;
@@ -65,7 +66,7 @@ body {
   padding-left: 5%;
   padding-right: 5%;
   outline: none;
-  white-space: pre-wrap;      /* preserves newlines */
+  white-space: pre-wrap; /* preserves newlines */
   word-break: break-word;
   overflow-wrap: break-word;
   text-rendering: optimizeLegibility;
@@ -140,14 +141,14 @@ body {
     padding: 0 !important;
     background: #fff !important;
     overflow: hidden !important;
-    display: block !important;            /* <— no centering */
+    display: block !important; /* <— no centering */
   }
 
   /* Physical paper box; no centering here either */
   html.printing .print-paper {
     width: 210mm !important;
     height: 297mm !important;
-    margin: 0 auto !important;            /* center horizontally only */
+    margin: 0 auto !important; /* center horizontally only */
     box-shadow: none !important;
     border: none !important;
     border-radius: 0 !important;
@@ -156,7 +157,7 @@ body {
     background: #fff !important;
     color: #000 !important;
     page-break-inside: avoid !important;
-    display: block !important;            /* <— no centering */
+    display: block !important; /* <— no centering */
   }
 
   /* If the html has landscape class, swap physical paper dimensions */
@@ -167,7 +168,7 @@ body {
 
   /* Editor fills the paper; mm-driven text metrics */
   html.printing .print-paper #editor {
-    height: 100% !important;              /* <— ensure fills paper */
+    height: 100% !important; /* <— ensure fills paper */
     max-width: 100% !important;
     width: 100% !important;
 
@@ -190,14 +191,26 @@ body {
   }
 
   /* Hide residual app chrome */
-  header, footer, nav, aside, .controls, .space-y-6, button, input, select, textarea {
+  header,
+  footer,
+  nav,
+  aside,
+  .controls,
+  .space-y-6,
+  button,
+  input,
+  select,
+  textarea {
     display: none !important;
   }
 }
 
 /* Landscape override (valid, non-nested) */
 @media print and (orientation: landscape) {
-  @page { size: A4 landscape; margin: 0; }
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
 
   html.printing .print-paper {
     width: 297mm !important;

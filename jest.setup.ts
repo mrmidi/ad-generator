@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 // Simple polyfills for Jest environment
 Object.defineProperty(global, 'alert', {
   value: () => {},
-  writable: true
+  writable: true,
 });
 
 Object.defineProperty(global, 'ResizeObserver', {
@@ -12,7 +12,7 @@ Object.defineProperty(global, 'ResizeObserver', {
     unobserve() {}
     disconnect() {}
   },
-  writable: true
+  writable: true,
 });
 
 Object.defineProperty(global, 'requestAnimationFrame', {
@@ -20,10 +20,10 @@ Object.defineProperty(global, 'requestAnimationFrame', {
     setTimeout(cb, 0);
     return 1;
   },
-  writable: true
+  writable: true,
 });
 
 Object.defineProperty(global, 'cancelAnimationFrame', {
   value: () => {},
-  writable: true
+  writable: true,
 });

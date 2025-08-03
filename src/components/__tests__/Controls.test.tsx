@@ -17,7 +17,10 @@ describe('Controls', () => {
 
     const debugModeToggle = screen.getByLabelText(/debug mode/i);
     fireEvent.click(debugModeToggle);
-    expect(mockSetState).toHaveBeenCalledWith({ ...initialState, debugMode: true });
+    expect(mockSetState).toHaveBeenCalledWith({
+      ...initialState,
+      debugMode: true,
+    });
   });
 
   it('renders the paper format toggle', () => {
@@ -50,20 +53,25 @@ describe('Controls', () => {
 
     const fontSizeSlider = screen.getByLabelText(/размер шрифта/i);
     fireEvent.change(fontSizeSlider, { target: { value: '75' } });
-    expect(mockSetState).toHaveBeenCalledWith({ ...initialState, fontSize: 75 });
+    expect(mockSetState).toHaveBeenCalledWith({
+      ...initialState,
+      fontSize: 75,
+    });
   });
 
   it('renders the vertical position slider', () => {
     render(<Controls state={initialState} setState={mockSetState} />);
 
-    const verticalPositionSlider = screen.getByLabelText(/позиция по вертикали/i);
+    const verticalPositionSlider =
+      screen.getByLabelText(/позиция по вертикали/i);
     expect(verticalPositionSlider).toBeInTheDocument();
   });
 
   it('changes the vertical position', () => {
     render(<Controls state={initialState} setState={mockSetState} />);
 
-    const verticalPositionSlider = screen.getByLabelText(/позиция по вертикали/i);
+    const verticalPositionSlider =
+      screen.getByLabelText(/позиция по вертикали/i);
     fireEvent.change(verticalPositionSlider, { target: { value: '25' } });
     expect(mockSetState).toHaveBeenCalledWith({
       ...initialState,
