@@ -210,7 +210,37 @@ The project includes comprehensive GitHub Actions workflows:
 - **E2E Testing**: Playwright browser automation
 - **Security Auditing**: Dependency vulnerability scanning
 - **Build Verification**: Production build validation
-- **Automated Deployment**: Vercel and GitHub Pages support
+- **VPS Deployment**: Automated deployment to mrmidi.net
+- **Vercel/GitHub Pages**: Alternative deployment options
+
+### Deployment Options
+
+#### 🌐 **Production Deployment** (Recommended)
+- **Live Site**: https://ad-generator.mrmidi.net
+- **Auto-deployment**: Pushes to `main` branch trigger deployment
+- **VPS Setup**: Debian 12 + Nginx + Let's Encrypt SSL
+- **Performance**: Static files served via Nginx with caching
+
+#### ☁️ **Alternative Deployments**
+- **Vercel**: Automatic deployment on push (configure secrets)
+- **GitHub Pages**: Static export on version tags
+
+### 🔧 VPS Deployment Setup
+
+1. **Run VPS setup** (one-time):
+   ```bash
+   sudo bash setup-vps.sh
+   ```
+
+2. **Configure GitHub secrets**:
+   - `VPS_SSH_KEY`: SSH private key for deployment
+   - `VPS_HOST`: Server IP or domain (mrmidi.net)
+   - `VPS_USER`: Deploy user (deploy)
+   - `VPS_TARGET_PATH`: Web directory path
+
+3. **Deployment happens automatically** on git push to main
+
+See `setup-github-secrets.md` for detailed setup instructions.
 
 ## 🤝 Contributing
 

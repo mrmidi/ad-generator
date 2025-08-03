@@ -1,0 +1,54 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: |
+          npm test -- --watchAll=false
+          npm run lint
+
+      - name: Build application
+        run: |
+          npm run build
+          ls -la out/
+
+      - name: Deploy to VPS
+        uses: easingthemes/ssh-deploy@v5.1.0
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
+          ARGS: "-rlgoDzvc -i --delete"
+          SOURCE: "out/"
+          REMOTE_HOST: ${{ secrets.VPS_HOST }}
+          REMOTE_USER: ${{ secrets.VPS_USER }}
+          TARGET: ${{ secrets.VPS_TARGET_PATH }}
+          EXCLUDE: "/node_modules/, /.git/, /.github/, /src/, /tests/"
+          SCRIPT_BEFORE: |
+            whoami
+            ls -la ${{ secrets.VPS_TARGET_PATH }}
+          SCRIPT_AFTER: |
+            echo "Deployment completed"
+            ls -la ${{ secrets.VPS_TARGET_PATH }}
+            sudo systemctl reload nginx
+            echo "Nginx reloaded"
