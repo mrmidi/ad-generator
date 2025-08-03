@@ -74,20 +74,6 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Start application in development mode
-        run: npm run dev &
-        env:
-          CI: true
-
-      - name: Wait for app to be ready
-        run: |
-          echo "Waiting for app to start on http://localhost:3000"
-          npx wait-on http://localhost:3000 --timeout 60000 --interval 1000 --verbose
-          echo "App is ready!"
-
-      - name: Verify app is running
-        run: curl -f http://localhost:3000 || exit 1
-
       - name: Run Playwright tests
         run: npm run test:e2e
 
