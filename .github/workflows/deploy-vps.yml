@@ -1,16 +1,23 @@
 name: Deploy to VPS
 
 on:
-  push:
+  workflow_run:
+    workflows: ['CI/CD Pipeline']
+    types:
+      - completed
     branches: [main]
-    tags: ['v*']  # Also trigger on version tags
+  push:
+    tags: ['v*'] # Also trigger on version tags
   workflow_dispatch:
 
 jobs:
   deploy:
     name: Deploy to VPS
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')
+    if: |
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') ||
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
+      (github.event_name == 'workflow_dispatch')
 
     steps:
       - name: Checkout code
@@ -24,11 +31,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Run tests
-        run: |
-          npm test -- --watchAll=false
-          npm run lint
 
       - name: Build application
         run: |
