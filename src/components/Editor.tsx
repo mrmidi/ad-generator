@@ -205,8 +205,8 @@ Computed Direction: ${getComputedStyle(editor).direction}`;
         {/* Paper format indicator */}
         <div className="absolute -bottom-2 -right-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full shadow-md">
           {state.paperFormat === 'a4-portrait'
-            ? '📄 A4 Portrait'
-            : '📄 A4 Landscape'}
+            ? '📄 A4 Портрет'
+            : '📄 A4 Ландшафт'}
         </div>
       </div>
     </div>
