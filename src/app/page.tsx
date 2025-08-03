@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Controls from '@/components/Controls';
 import Editor from '@/components/Editor';
 import Debug from '@/components/Debug';
+import ArrowToolbar from '@/components/ArrowToolbar';
 import { AppState, initialState } from './state';
 
 export default function Home() {
@@ -15,13 +16,19 @@ export default function Home() {
       <Header />
       <div className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 space-y-6">
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
               <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                 ⚙️ Настройки
               </h2>
               <Controls state={state} setState={setState} />
               {state.debugMode && <Debug />}
+            </div>
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+              <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                ➡️ Символы стрелок
+              </h2>
+              <ArrowToolbar state={state} setState={setState} />
             </div>
           </div>
           <div className="lg:col-span-8">
