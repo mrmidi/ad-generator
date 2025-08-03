@@ -1,7 +1,29 @@
 {
   "name": "ad-generator",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "MIT",
+  "author": "mrmidi",
+  "description": "Modern web app for creating and printing text announcements with WYSIWYG accuracy",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrmidi/ad-generator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrmidi/ad-generator/issues"
+  },
+  "homepage": "https://github.com/mrmidi/ad-generator#readme",
+  "keywords": [
+    "nextjs",
+    "typescript",
+    "printing",
+    "wysiwyg",
+    "react",
+    "tailwindcss",
+    "announcements",
+    "pdf",
+    "iframe-printing"
+  ],
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev --turbopack",
     "build": "next build",

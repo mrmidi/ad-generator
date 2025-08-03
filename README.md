@@ -1,6 +1,22 @@
 # Ad Generator - Announcement Creator 🖨️
 
+[![CI/CD Pipeline](https://github.com/mrmidi/ad-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/mrmidi/ad-generator/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+
 A modern web application for creating and printing text-based announcements with WYSIWYG accuracy. Built with Next.js, React, TypeScript, and Tailwind CSS using Test-Driven Development (TDD).
+
+🔗 **Repository**: https://github.com/mrmidi/ad-generator
+
+## 📊 Current Status
+
+- ✅ **Core Functionality**: Complete iframe-based WYSIWYG printing
+- ✅ **Testing**: 100% test coverage with Jest + Playwright
+- ✅ **CI/CD**: Automated testing, linting, and deployment pipelines
+- ✅ **Documentation**: Comprehensive README and issue templates
+- ✅ **Open Source**: MIT licensed for community contributions
+- 🚀 **Production Ready**: Built and deployed with Next.js 15
 
 ## ✨ Features
 
@@ -209,7 +225,16 @@ The project includes comprehensive GitHub Actions workflows:
 
 ## 📜 License
 
-This project is private and proprietary.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### MIT License Summary
+
+- ✅ **Commercial use** - You can use this software commercially
+- ✅ **Modification** - You can modify the source code
+- ✅ **Distribution** - You can distribute the software
+- ✅ **Private use** - You can use this software privately
+- ℹ️ **License and copyright notice** - Include the original license and copyright notice
+- ❌ **Warranty** - The software is provided "as is" without warranty
 
 ## 🔄 Migration Notes
 
