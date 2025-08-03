@@ -211,21 +211,15 @@ The project includes comprehensive GitHub Actions workflows:
 - **Security Auditing**: Dependency vulnerability scanning
 - **Build Verification**: Production build validation
 - **VPS Deployment**: Automated deployment to mrmidi.net
-- **Vercel/GitHub Pages**: Alternative deployment options
 
-### Deployment Options
+## 🚀 Production Deployment
 
-#### 🌐 **Production Deployment** (Recommended)
+### Live Site
 
-- **Live Site**: https://ad-generator.mrmidi.net
+- **URL**: <https://ad-generator.mrmidi.net>
 - **Auto-deployment**: Pushes to `main` branch trigger deployment
-- **VPS Setup**: Debian 12 + Nginx + Let's Encrypt SSL
+- **Infrastructure**: Debian 12 + Nginx + Let's Encrypt SSL
 - **Performance**: Static files served via Nginx with caching
-
-#### ☁️ **Alternative Deployments**
-
-- **Vercel**: Automatic deployment on push (configure secrets)
-- **GitHub Pages**: Static export on version tags
 
 ### 🔧 VPS Deployment Setup
 
