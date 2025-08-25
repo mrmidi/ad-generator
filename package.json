@@ -60,7 +60,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "audit-ci": "^7.1.0",
-    "canvas": "^3.1.2",
+    "canvas": "^3.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
     "jest": "^30.0.5",
