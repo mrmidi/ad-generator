@@ -1,16 +1,19 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import { FlatCompat } from '@eslint/eslintrc';
+import { defineConfig } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-];
-
-export default eslintConfig;
+// This uses the new ESLint flat config format; it pulls in the Next.js
+// recommended rules (including TypeScript rules) and sets the Next.js
+// `rootDir` so `@next/eslint-plugin-next` can locate the `src/app` folder.
+export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  {
+    files: ['**/*.{js,jsx,ts,tsx}'],
+    settings: {
+      next: {
+        rootDir: 'src',
+      },
+    },
+  },
+]);
