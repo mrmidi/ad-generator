@@ -5,7 +5,7 @@ test.describe('Iframe Print WYSIWYG', () => {
   const EDITOR_CONTENT = 'Line 1\nLine 2\nBig announcement!';
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/ad-generator');
     await page.waitForSelector('.paper-base', { timeout: 10000 });
 
     // Ensure the editor has some content and trigger input logic if needed

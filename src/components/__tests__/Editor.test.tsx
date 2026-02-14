@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import Editor from '../Editor';
-import { initialState } from '@/app/state';
+import { initialState } from '@/app/ad-generator/state';
 
 // Mock the layout utilities first, before any imports
 jest.mock('../../utils/layout', () => ({

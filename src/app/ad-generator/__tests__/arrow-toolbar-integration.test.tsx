@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Home from '@/app/page';
+import Home from '../page';
 
 describe('ArrowToolbar Integration', () => {
   it('integrates ArrowToolbar into the main page layout', () => {

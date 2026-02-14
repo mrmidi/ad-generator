@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ArrowToolbar from '../ArrowToolbar';
-import type { AppState } from '@/app/state';
+import type { AppState } from '@/app/ad-generator/state';
 
 const mockState: AppState = {
   debugMode: false,

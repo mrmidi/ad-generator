@@ -6,7 +6,7 @@ describe('Header', () => {
     render(<Header />);
 
     const heading = screen.getByRole('heading', {
-      name: /генератор объявлений/i,
+      name: /Инструменты красоты и здоровья/i,
     });
 
     expect(heading).toBeInTheDocument();

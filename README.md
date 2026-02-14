@@ -1,6 +1,6 @@
 # Ad Generator - Announcement Creator 🖨️
 
-[![CI/CD Pipeline](https://github.com/mrmidi/ad-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/mrmidi/ad-generator/actions/workflows/ci.yml)
+[![CI Pipeline](https://github.com/mrmidi/ad-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/mrmidi/ad-generator/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
@@ -13,10 +13,10 @@ A modern web application for creating and printing text-based announcements with
 
 - ✅ **Core Functionality**: Complete iframe-based WYSIWYG printing
 - ✅ **Testing**: 100% test coverage with Jest + Playwright
-- ✅ **CI/CD**: Automated testing, linting, and deployment pipelines
+- ✅ **CI**: Automated testing, linting, and security auditing
 - ✅ **Documentation**: Comprehensive README and issue templates
 - ✅ **Open Source**: MIT licensed for community contributions
-- 🚀 **Production Ready**: Built and deployed with Next.js 15
+- 🚀 **Production Ready**: Built with Next.js 15
 
 ## ✨ Features
 
@@ -201,43 +201,23 @@ npm run type-check       # TypeScript type checking
 - **E2E Tests**: Full print workflow validation
 - **Visual Tests**: WYSIWYG print accuracy
 
-## 🚀 CI/CD Pipeline
+## 🚀 CI Pipeline
 
-The project includes comprehensive GitHub Actions workflows:
+The project includes a comprehensive GitHub Actions workflow:
 
 - **Linting & Formatting**: ESLint and Prettier checks
 - **Unit Testing**: Jest with coverage reporting
 - **E2E Testing**: Playwright browser automation
 - **Security Auditing**: Dependency vulnerability scanning
 - **Build Verification**: Production build validation
-- **VPS Deployment**: Automated deployment to mrmidi.net
 
 ## 🚀 Production Deployment
 
 ### Live Site
 
-- **URL**: <https://ad-generator.mrmidi.net>
-- **Auto-deployment**: Pushes to `main` branch trigger deployment
-- **Infrastructure**: Debian 12 + Nginx + Let's Encrypt SSL
-- **Performance**: Static files served via Nginx with caching
-
-### 🔧 VPS Deployment Setup
-
-1. **Run VPS setup** (one-time):
-
-   ```bash
-   sudo bash setup-vps.sh
-   ```
-
-2. **Configure GitHub secrets**:
-   - `VPS_SSH_KEY`: SSH private key for deployment
-   - `VPS_HOST`: Server IP or domain (mrmidi.net)
-   - `VPS_USER`: Deploy user (deploy)
-   - `VPS_TARGET_PATH`: Web directory path
-
-3. **Deployment happens automatically** on git push to main
-
-See `setup-github-secrets.md` for detailed setup instructions.
+- **URL**: <https://bandh.mrmidi.net>
+- **Platform**: [Vercel](https://vercel.com)
+- **Deployment**: Automatic deployment from `main` branch
 
 ## 🤝 Contributing
 

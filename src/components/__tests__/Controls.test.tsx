@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Controls from '../Controls';
-import { initialState } from '@/app/state';
+import { initialState } from '@/app/ad-generator/state';
 
 describe('Controls', () => {
   const mockSetState = jest.fn();
