@@ -7,7 +7,7 @@ import {
   measureTextHeightWithProbe,
   sanitizeText,
 } from '@/utils/layout';
-import type { AppState } from '@/app/state';
+import type { AppState } from '@/app/ad-generator/state';
 
 interface EditorProps {
   state: AppState;

@@ -5,7 +5,7 @@ import {
   IoArrowBack,
   IoArrowForward,
 } from 'react-icons/io5';
-import type { AppState } from '@/app/state';
+import type { AppState } from '@/app/ad-generator/state';
 
 interface ArrowToolbarProps {
   state: AppState;
