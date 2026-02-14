@@ -21,7 +21,8 @@ const roboto = Roboto({
 
 export const metadata: Metadata = {
   title: 'Инструменты красоты и здоровья',
-  description: 'Полезные веб-инструменты для специалистов индустрии красоты и здоровья',
+  description:
+    'Полезные веб-инструменты для специалистов индустрии красоты и здоровья',
 };
 
 export default function RootLayout({

@@ -1,6 +1,6 @@
 'use client';
 
-import Image from "next/image";
+import Image from 'next/image';
 import Header from '@/components/Header';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { HiOutlinePrinter } from 'react-icons/hi';
@@ -93,12 +93,12 @@ function BusinessCard({
 
 export default function PrintableCardsPage() {
   const cardData: CardProps = {
-    title: "Лавка здоровья и красоты",
-    address1: "Ул. Ленина, д. 3,",
-    address2: "ост. «Горячий Хлеб»",
-    hours: "С 11 до 20 Без выходных",
-    phone: "8-926-397-33-23",
-    tgUrl: "https://t.me/avon_lytkarino",
+    title: 'Лавка здоровья и красоты',
+    address1: 'Ул. Ленина, д. 3,',
+    address2: 'ост. «Горячий Хлеб»',
+    hours: 'С 11 до 20 Без выходных',
+    phone: '8-926-397-33-23',
+    tgUrl: 'https://t.me/avon_lytkarino',
   };
 
   // 9 cards per page (3 x 3)
@@ -143,7 +143,9 @@ export default function PrintableCardsPage() {
             </div>
 
             <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
-              <h3 className="font-bold text-blue-900 mb-2">Информация о печати</h3>
+              <h3 className="font-bold text-blue-900 mb-2">
+                Информация о печати
+              </h3>
               <ul className="text-sm text-blue-800 space-y-2 list-disc pl-4">
                 <li>Размер: 55 × 85 мм (вертикальная)</li>
                 <li>На листе A4: 9 шт. (3×3)</li>
@@ -155,7 +157,9 @@ export default function PrintableCardsPage() {
           {/* Right: page mock */}
           <div className="lg:w-2/3">
             <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 h-full">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Макет листа</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">
+                Макет листа
+              </h2>
               <p className="text-gray-600 mb-6">
                 Печать: {TOTAL_CARDS} визиток (3×3), оптимизировано по высоте.
               </p>
@@ -173,7 +177,8 @@ export default function PrintableCardsPage() {
               </div>
 
               <div className="mt-3 text-sm text-gray-500">
-                Если принтер всё ещё оставляет “воздух”, попробуйте “Fit to page” выключить, оставить 100%.
+                Если принтер всё ещё оставляет “воздух”, попробуйте “Fit to
+                page” выключить, оставить 100%.
               </div>
             </div>
           </div>
@@ -187,13 +192,13 @@ export default function PrintableCardsPage() {
             <div
               key={idx}
               className={[
-                "card-wrap",
+                'card-wrap',
                 // shared grid lines:
-                "border-black border-t border-l",
+                'border-black border-t border-l',
                 // add outer border on last col / last row:
-                ((idx + 1) % 3 === 0) ? "border-r" : "",
-                (idx >= 6) ? "border-b" : "",
-              ].join(" ")}
+                (idx + 1) % 3 === 0 ? 'border-r' : '',
+                idx >= 6 ? 'border-b' : '',
+              ].join(' ')}
             >
               <BusinessCard {...c} />
             </div>
