@@ -154,10 +154,11 @@ export default function ChannelStats() {
                     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
                         {/* Header row */}
                         <div className="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 border-b border-gray-100 text-xs font-bold text-gray-500 uppercase tracking-wider">
-                            <div className="col-span-3">Дата</div>
+                            <div className="col-span-2">Дата</div>
                             <div className="col-span-3">Канал</div>
+                            <div className="col-span-3">Пользователь</div>
                             <div className="col-span-2">Событие</div>
-                            <div className="col-span-4">Переход</div>
+                            <div className="col-span-2">Переход</div>
                         </div>
 
                         {/* Event rows */}
@@ -166,11 +167,25 @@ export default function ChannelStats() {
                                 key={ev.id}
                                 className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors items-center"
                             >
-                                <div className="col-span-3 text-sm text-gray-500 font-mono">
+                                <div className="col-span-2 text-sm text-gray-500 font-mono">
                                     {formatDate(ev.date)}
                                 </div>
-                                <div className="col-span-3 text-sm font-semibold text-gray-800 truncate">
+                                <div className="col-span-3 text-sm font-semibold text-gray-800 truncate" title={ev.chat_title || `Chat #${ev.chat_id}`}>
                                     {ev.chat_title || `Chat #${ev.chat_id}`}
+                                </div>
+                                <div className="col-span-3 text-sm text-gray-700 truncate">
+                                    {ev.user ? (
+                                        <div className="flex flex-col">
+                                            <span className="font-medium truncate" title={[ev.user.first_name, ev.user.last_name].filter(Boolean).join(' ')}>
+                                                {[ev.user.first_name, ev.user.last_name].filter(Boolean).join(' ')}
+                                            </span>
+                                            {ev.user.username && (
+                                                <span className="text-xs text-blue-500">@{ev.user.username}</span>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <span className="text-gray-400 italic">Неизвестно</span>
+                                    )}
                                 </div>
                                 <div className="col-span-2">
                                     <span
@@ -179,9 +194,9 @@ export default function ChannelStats() {
                                         {ev.event_type}
                                     </span>
                                 </div>
-                                <div className="col-span-4 text-sm text-gray-500">
+                                <div className="col-span-2 text-sm text-gray-500">
                                     <span className="text-gray-400">{ev.old_status || '—'}</span>
-                                    <span className="mx-2 text-gray-300">→</span>
+                                    <span className="mx-1 text-gray-300">→</span>
                                     <span className="font-medium text-gray-700">
                                         {ev.new_status || '—'}
                                     </span>

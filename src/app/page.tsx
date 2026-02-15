@@ -7,6 +7,8 @@ import {
   HiOutlineDocumentText,
   HiOutlineIdentification,
   HiOutlineChartBar,
+  HiOutlineUsers,
+  HiOutlineSparkles,
 } from 'react-icons/hi';
 
 interface Tool {
@@ -95,6 +97,24 @@ export default function MainMenu() {
       href: '/channel-stats',
       active: true,
       badge: 'Новое',
+    },
+    {
+      title: 'Управление группами',
+      description:
+        'Настройка списка отслеживаемых групп. Включение/отключение бота и выбор канала для отчетов модерации.',
+      icon: <HiOutlineUsers className="w-10 h-10 text-pink-500" />,
+      href: '/groups',
+      active: true,
+      badge: 'Beta',
+    },
+    {
+      title: 'Генератор постов Avon',
+      description:
+        'AI-генератор маркетинговых постов для продуктов Avon. Автоматический поиск и создание текстов на русском.',
+      icon: <HiOutlineSparkles className="w-10 h-10 text-pink-500" />,
+      href: '/avon-post',
+      active: true,
+      badge: 'AI',
     },
   ];
 
