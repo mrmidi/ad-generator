@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Roboto } from 'next/font/google';
 import GlobalExports from '@/components/GlobalExports';
+import AuthGuard from '@/components/AuthGuard';
 import './globals.css';
 
 const geistSans = Geist({
@@ -36,8 +37,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} antialiased`}
       >
         <GlobalExports />
-        {children}
+        <AuthGuard>{children}</AuthGuard>
       </body>
     </html>
   );
 }
+

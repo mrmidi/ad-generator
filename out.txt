@@ -1,0 +1,112 @@
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/app/layout.tsx
+	modified:   src/app/page.tsx
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	out.txt
+	src/app/channel-stats/
+	src/components/AuthGuard.tsx
+	src/components/LoginForm.tsx
+	src/lib/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+diff --git a/src/app/layout.tsx b/src/app/layout.tsx
+index 8ab692e..56f666e 100644
+--- a/src/app/layout.tsx
++++ b/src/app/layout.tsx
+@@ -1,6 +1,7 @@
+ import type { Metadata } from 'next';
+ import { Geist, Geist_Mono, Roboto } from 'next/font/google';
+ import GlobalExports from '@/components/GlobalExports';
++import AuthGuard from '@/components/AuthGuard';
+ import './globals.css';
+ 
+ const geistSans = Geist({
+@@ -36,8 +37,9 @@ export default function RootLayout({
+         className={`${geistSans.variable} ${geistMono.variable} ${roboto.variable} antialiased`}
+       >
+         <GlobalExports />
+-        {children}
++        <AuthGuard>{children}</AuthGuard>
+       </body>
+     </html>
+   );
+ }
++
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index 30fce79..4546759 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -2,7 +2,12 @@
+ 
+ import Link from 'next/link';
+ import Header from '@/components/Header';
+-import { HiOutlineDocumentText, HiOutlineIdentification } from 'react-icons/hi';
++import { logout, getUsername } from '@/lib/api';
++import {
++  HiOutlineDocumentText,
++  HiOutlineIdentification,
++  HiOutlineChartBar,
++} from 'react-icons/hi';
+ 
+ interface Tool {
+   title: string;
+@@ -20,10 +25,9 @@ function ToolCard({ tool }: { tool: Tool }) {
+       className={`
+         group relative flex flex-col h-full bg-white rounded-2xl shadow-lg 
+         overflow-hidden transition-all duration-300 border border-gray-100
+-        ${
+-          tool.active
+-            ? 'hover:shadow-2xl hover:-translate-y-1 cursor-pointer'
+-            : 'opacity-80 cursor-not-allowed'
++        ${tool.active
++          ? 'hover:shadow-2xl hover:-translate-y-1 cursor-pointer'
++          : 'opacity-80 cursor-not-allowed'
+         }
+       `}
+     >
+@@ -53,11 +57,10 @@ function ToolCard({ tool }: { tool: Tool }) {
+       <div
+         className={`
+         px-8 py-5 flex items-center font-bold text-sm tracking-wide transition-colors
+-        ${
+-          tool.active
++        ${tool.active
+             ? 'bg-gray-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white border-t border-gray-100'
+             : 'bg-gray-100 text-gray-400 border-t border-gray-200'
+-        }
++          }
+       `}
+       >
+         {tool.active ? 'ОТКРЫТЬ ИНСТРУМЕНТ →' : 'В РАЗРАБОТКЕ'}
+@@ -84,6 +87,15 @@ export default function MainMenu() {
+       href: '/business-card',
+       active: true,
+     },
++    {
++      title: 'Статистика каналов',
++      description:
++        'Лог событий Telegram-каналов: вступления, выходы, изменения статусов участников в реальном времени.',
++      icon: <HiOutlineChartBar className="w-10 h-10 text-emerald-500" />,
++      href: '/channel-stats',
++      active: true,
++      badge: 'Новое',
++    },
+   ];
+ 
+   return (
+@@ -100,7 +112,7 @@ export default function MainMenu() {
+           </p>
+         </div>
+ 
+-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
++        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 max-w-6xl mx-auto">
+           {tools.map(tool => (
+             <ToolCard key={tool.href} tool={tool} />
+           ))}
