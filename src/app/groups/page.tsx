@@ -29,7 +29,7 @@ export default function GroupsPage() {
         loadGroups();
     }, [loadGroups]);
 
-    const handleToggle = async (chatId: number, field: 'is_active' | 'is_mod_group', currentValue: boolean) => {
+    const handleToggle = async (chatId: number, field: 'is_active' | 'is_mod_group' | 'enable_spam_filter', currentValue: boolean) => {
         // Optimistic update
         setGroups(prev => prev.map(g => {
             if (g.chat.id === chatId) {
@@ -38,6 +38,7 @@ export default function GroupsPage() {
                     chat_id: chatId,
                     is_active: false,
                     is_mod_group: false,
+                    enable_spam_filter: true,
                     notes: null
                 };
                 return {
@@ -54,13 +55,14 @@ export default function GroupsPage() {
         setUpdating(chatId);
 
         try {
-            // Find current state to get the OTHER field value
+            // Find current state to get the OTHER field values
             const group = groups.find(g => g.chat.id === chatId);
-            const currentSettings = group?.settings || { is_active: false, is_mod_group: false };
+            const currentSettings = group?.settings || { is_active: false, is_mod_group: false, enable_spam_filter: true };
 
             await updateGroupSettings(chatId, {
                 is_active: field === 'is_active' ? !currentValue : currentSettings.is_active,
                 is_mod_group: field === 'is_mod_group' ? !currentValue : currentSettings.is_mod_group,
+                enable_spam_filter: field === 'enable_spam_filter' ? !currentValue : currentSettings.enable_spam_filter,
             });
         } catch (err) {
             // Revert on error
@@ -134,12 +136,14 @@ export default function GroupsPage() {
                                     <th className="px-6 py-4">Название</th>
                                     <th className="px-6 py-4">Тип</th>
                                     <th className="px-6 py-4 text-center">Бот активен</th>
+                                    <th className="px-6 py-4 text-center">Спам-фильтр</th>
                                     <th className="px-6 py-4 text-center">Модерация</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-50">
                                 {groups.map(group => {
                                     const isActive = group.settings?.is_active ?? false;
+                                    const enableSpamFilter = group.settings?.enable_spam_filter ?? true;
                                     const isModGroup = group.settings?.is_mod_group ?? false;
 
                                     return (
@@ -176,6 +180,17 @@ export default function GroupsPage() {
                                                         onChange={() => handleToggle(group.chat.id, 'is_active', isActive)}
                                                     />
                                                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                                </label>
+                                            </td>
+                                            <td className="px-6 py-4 text-center">
+                                                <label className="relative inline-flex items-center cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="sr-only peer"
+                                                        checked={enableSpamFilter}
+                                                        onChange={() => handleToggle(group.chat.id, 'enable_spam_filter', enableSpamFilter)}
+                                                    />
+                                                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
                                                 </label>
                                             </td>
                                             <td className="px-6 py-4 text-center">

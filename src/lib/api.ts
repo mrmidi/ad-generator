@@ -150,6 +150,7 @@ export interface AllowedGroupSettings {
     chat_id: number;
     is_active: boolean;
     is_mod_group: boolean;
+    enable_spam_filter: boolean;
     notes: string | null;
 }
 
@@ -176,7 +177,7 @@ export async function fetchGroups(): Promise<GroupResponse[]> {
 
 export async function updateGroupSettings(
     chatId: number,
-    settings: { is_active: boolean; is_mod_group: boolean }
+    settings: { is_active: boolean; is_mod_group: boolean; enable_spam_filter?: boolean }
 ): Promise<AllowedGroupSettings> {
     const token = getToken();
     const res = await fetch(`${API_BASE}/api/groups/${chatId}`, {
