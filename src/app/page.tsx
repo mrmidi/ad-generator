@@ -84,7 +84,7 @@ export default function MainMenu() {
     {
       title: 'Визитные карточки',
       description:
-        'Конструктор вертикальных визиток 55×85 мм. Оптимизированный макет 3×3 для ручной резки.',
+        'Конструктор визиток: компактные мини-карточки 65×35 мм (24 шт на A4) и вертикальные с QR 55×85 мм (9 шт).',
       icon: <HiOutlineIdentification className="w-10 h-10 text-purple-500" />,
       href: '/business-card',
       active: true,
